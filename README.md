@@ -53,3 +53,8 @@ create a superuser for login into backend (127.0.0.1/admin):
 ```
 python3 manage.py createsuperuser
 ```
+
+load initial data from yaml-files by:
+```
+python3 manage.py loaddata initial_data/*
+```
