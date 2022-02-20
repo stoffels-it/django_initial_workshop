@@ -1,0 +1,26 @@
+
+add to settings.py:
+---
+AUTH_USER_MODEL = 'core.Person'
+
+INSTALLED_APPS = [
+'admin_reorder',
+    'crispy_forms',
+    'django_registration',
+    'phone_field',
+    'core.apps.CoreConfig',
+...
+   
+python3 manage.py migrate
+
+add to call_for_volunteers/urls.py:
+---
+import path, include
+
+path('', include('core.urls')),
+    path('accounts/company_register/', CompanyRegistrationView.as_view(
+        form_class=CompanySignUpForm),
+        name='django_company_register',
+    ),
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),

@@ -1,0 +1,39 @@
+version: '3.0'
+
+networks:
+  backend:
+
+services:
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_NAME: dockerws
+      POSTGRES_USER: dockerws
+      POSTGRES_PASSWORD: dockerws
+    networks:
+      - backend
+
+  djangows:
+    build:
+      context: ./services/djangows
+      args:
+        WORKDIR: ${WORKDIR}
+    command: python3 manage.py runserver --settings=call_for_volunteers.settings 0.0.0.0:80
+    depends_on:
+      - database
+    networks:
+      - backend
+    ports:
+      - "127.0.0.1:80:80"
+    volumes:
+      - ./shared_folder:/shared
+    environment:
+      PosTGRES_NAME: dockerws
+      POSTGRES_USER: dockerws
+      POSTGRES_PASSWORD: dockerws
+      GIT_SSL_NO_VERIFY: 1
+      DJANGO_SUPERUSER_USERNAME: test
+      DJANGO_SUPERUSER_PASSWORD: test
+      PYTHONUNBuFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
